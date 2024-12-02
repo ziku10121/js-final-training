@@ -250,12 +250,13 @@ async function orderAPI(user) {
 
     if (res.status) {
       form.reset();
-      alert("成功送出訂單!");
+      alert("成功，送出訂單!");
       getCartsAPI();
     } else {
       console.error("status error!");
     }
   } catch (err) {
+    alert("訂單失敗!");
     console.error(err);
   }
 }
@@ -373,7 +374,9 @@ cartsList.addEventListener("click", function (e) {
   e.preventDefault();
 
   const discardBtn = e.target.closest(".discardBtn");
-  if (discardBtn) {
+
+  console.log(e.target.nodeName==='A');
+  if (e.target.nodeName==='A') {
     const cartItem = e.target.closest(".cart-item");
     const cartId = cartItem.dataset.id;
     deleteCartAPI(cartId);
@@ -390,6 +393,10 @@ discardAllBtn.addEventListener("click", function (e) {
 // 送出預定資料
 orderInfoBtn.addEventListener("click", function (e) {
   e.preventDefault();
+  if(cartData.length<=0){
+    alert('購物車為空，送出訂單!')
+  }
+
   submitHandle();
 });
 
